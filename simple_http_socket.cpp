@@ -1,5 +1,7 @@
 #include "server_http.hpp"
 #include "client_http.hpp"
+#include "/usr/local/opt/openssl/include/openssl/opensslv.h"
+#include <uWS/uWS.h>
 
 using namespace std;
 
@@ -21,6 +23,13 @@ int main() {
 	};
     
 	server.start();
+
+  // Socket
+
+  uWS::Hub h;
+  hub.onMessage([](uWS::WebSocket<uWS::SERVER> *ws, char *message, size_t length, uWS::OpCode opCode) {
+    ws->send(message, length, opCode);
+  });
     
 	return 0;
 
